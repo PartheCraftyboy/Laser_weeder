@@ -1,0 +1,65 @@
+# ============================================================================
+# Controller configuration for Jim
+#
+# Two controllers:
+#   joint_state_broadcaster  reads joint positions out of the hardware and
+#                            publishes /joint_states. Not a controller in
+#                            the usual sense - it commands nothing. Without
+#                            it, RViz and TF have no idea where the robot is.
+#
+#   gantry_controller        takes trajectories and executes them. This is
+#                            what the supervisor will send goals to.
+# ============================================================================
+
+controller_manager:
+  ros__parameters:
+    # How often the control loop runs. 100 Hz is plenty for a gantry moving
+    # at 35 mm/s - that is 0.35 mm of travel per cycle.
+    update_rate: 100
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    gantry_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+
+gantry_controller:
+  ros__parameters:
+    joints:
+      - joint_x
+      - joint_y
+
+    # We command position and read back position + velocity. There is no
+    # torque control here and there does not need to be: a stepper driven
+    # open-loop through a lead screw is a position device.
+    command_interfaces:
+      - position
+
+    state_interfaces:
+      - position
+      - velocity
+
+    state_publish_rate: 50.0
+    action_monitor_rate: 20.0
+
+    # Reject goals that only name some of the joints. For a 2-axis gantry
+    # a partial goal is almost always a bug in the caller.
+    allow_partial_joints_goal: false
+
+    # Interpolate between waypoints rather than stepping. Gives smooth
+    # motion from sparse goals, which is what the supervisor will send.
+    interpolation_method: splines
+
+    constraints:
+      # How still it must be before a goal counts as reached.
+      stopped_velocity_tolerance: 0.001
+      # Grace period after the trajectory's nominal end time.
+      goal_time: 0.5
+
+      joint_x:
+        trajectory: 0.05    # max allowed error mid-motion, metres
+        goal: 0.002         # max allowed error at the end, metres
+      joint_y:
+        trajectory: 0.05
+        goal: 0.002

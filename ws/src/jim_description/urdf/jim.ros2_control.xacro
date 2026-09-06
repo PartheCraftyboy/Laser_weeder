@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+  ros2_control interface definition for Jim.
+
+  This is the file that makes "same code, sim and hardware" true.
+  The joints, command interfaces and limits below never change. Only the
+  <plugin> line swaps: Gazebo in simulation, a serial driver on the real
+  machine. Everything above this layer - controllers, targeting, the
+  supervisor - cannot tell the difference.
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="jim_ros2_control" params="use_sim travel_x travel_y max_vel params_file">
+
+    <ros2_control name="JimSystem" type="system">
+
+      <hardware>
+        <xacro:if value="${use_sim}">
+          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </xacro:if>
+
+        <xacro:unless value="${use_sim}">
+          <!-- Not written yet. When it is, it speaks the serial protocol
+               to the Arduino and does the ONE unit conversion in the
+               whole stack: metres <-> steps. -->
+          <plugin>jim_hardware/ArduinoGantrySystem</plugin>
+          <param name="port">/dev/ttyUSB0</param>
+          <param name="baud">115200</param>
+          <!-- 200 steps/rev * 16 microsteps / 0.008 m per rev = 400000 -->
+          <param name="steps_per_metre">400000</param>
+        </xacro:unless>
+      </hardware>
+
+      <joint name="joint_x">
+        <command_interface name="position">
+          <param name="min">0.0</param>
+          <param name="max">${travel_x}</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="joint_y">
+        <command_interface name="position">
+          <param name="min">0.0</param>
+          <param name="max">${travel_y}</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+    </ros2_control>
+
+    <!-- The Gazebo side of the bridge. This plugin starts a
+         controller_manager *inside* the simulator, which is why
+         you do not run controller_manager yourself in sim. -->
+    <xacro:if value="${use_sim}">
+      <gazebo>
+        <plugin filename="gz_ros2_control-system"
+                name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+          <parameters>${params_file}</parameters>
+        </plugin>
+      </gazebo>
+    </xacro:if>
+
+  </xacro:macro>
+
+</robot>
