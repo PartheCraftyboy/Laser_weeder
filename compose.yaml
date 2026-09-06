@@ -1,0 +1,23 @@
+services:
+  ros:
+    build:
+      context: .
+      args:
+        HOST_UID: "${HOST_UID}"
+        HOST_GID: "${HOST_GID}"
+    image: jim-ros2:jazzy
+    container_name: jim
+    stdin_open: true
+    tty: true
+    network_mode: host
+    ipc: host
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - ROS_DOMAIN_ID=0
+    volumes:
+      - ./ws:/home/dev/ws
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    devices:
+      - /dev/dri:/dev/dri
+    command: bash
