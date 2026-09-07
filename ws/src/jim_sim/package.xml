@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>jim_sim</name>
+  <version>0.1.0</version>
+  <description>Field world, oracle weed detector and targeting node for Jim.</description>
+  <maintainer email="you@example.com">capstone</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>vision_msgs</exec_depend>
+  <exec_depend>visualization_msgs</exec_depend>
+  <exec_depend>trajectory_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>std_srvs</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>tf2_geometry_msgs</exec_depend>
+  <exec_depend>jim_description</exec_depend>
+  <exec_depend>jim_bringup</exec_depend>
+  <exec_depend>ros_gz_sim</exec_depend>
+  <exec_depend>ros_gz_bridge</exec_depend>
+
+  <export><build_type>ament_python</build_type></export>
+</package>
