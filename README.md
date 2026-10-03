@@ -239,6 +239,12 @@ Jim/
 * **Docker Engine** & **Docker Compose**
 * **X11 display server** (for Gazebo & RViz GUI pass-through)
 
+```bash
+# 1. Clone the repository
+git clone https://github.com/PartheCraftyboy/Laser_weeder.git
+cd Laser_weeder
+```
+
 ### One-Command Launch (Docker)
 
 The repository includes a self-healing launch script [`run.sh`](run.sh) that configures user permissions, spawns Docker, purges stale daemon nodes, compiles the workspace with symlink install, and triggers the full capstone simulation:
