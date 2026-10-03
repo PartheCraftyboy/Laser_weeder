@@ -241,7 +241,12 @@ Jim/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/PartheCraftyboy/Laser_weeder.git
+# Via SSH:
+git clone git@github.com:PartheCraftyboy/Laser_weeder.git
+
+# Or via HTTPS:
+# git clone https://github.com/PartheCraftyboy/Laser_weeder.git
+
 cd Laser_weeder
 ```
 
