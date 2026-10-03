@@ -115,10 +115,6 @@
       <geometry><mesh filename="${mesh}/x_carriage.stl"/></geometry>
       <material name="jim_gold"/>
     </visual>
-    <collision>
-      <origin xyz="-0.0119 0.1865 0.0009" rpy="0 0 0"/>
-      <geometry><box size="0.042 0.415 0.062"/></geometry>
-    </collision>
   </link>
 
   <!-- y_carriage: Y nut, its block, laser head. -->
@@ -130,10 +126,6 @@
       <geometry><mesh filename="${mesh}/y_carriage.stl"/></geometry>
       <material name="jim_gold"/>
     </visual>
-    <collision>
-      <origin xyz="-0.0154 0.007 0.0093" rpy="0 0 0"/>
-      <geometry><box size="0.047 0.016 0.054"/></geometry>
-    </collision>
   </link>
 
   <!-- laser_aim_link: where the beam leaves the head, pointing down.

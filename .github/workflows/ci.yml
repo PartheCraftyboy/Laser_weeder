@@ -1,0 +1,35 @@
+name: ROS 2 CI
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  build-and-lint:
+    runs-on: ubuntu-latest
+    container:
+      image: osrf/ros:jazzy-desktop-full
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          apt-get update && apt-get install -y --no-install-recommends \
+            python3-colcon-common-extensions \
+            ros-jazzy-gz-ros2-control \
+            ros-jazzy-ros2-controllers \
+            ros-jazzy-ros-gz \
+            flake8
+
+      - name: Python linting
+        run: |
+          flake8 ws/src/jim_sim/jim_sim/ --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      - name: Colcon build
+        run: |
+          . /opt/ros/jazzy/setup.sh
+          cd ws
+          colcon build --event-handlers console_direct+

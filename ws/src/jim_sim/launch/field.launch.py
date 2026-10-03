@@ -81,7 +81,9 @@ def generate_launch_description():
             PathJoinSubstitution([
                 FindPackageShare("ros_gz_sim"), "launch", "gz_sim.launch.py"])
         ]),
-        launch_arguments={"gz_args": [world_file, " -r -v1"]}.items(),
+        launch_arguments={
+            "gz_args": [world_file, " -r -v", LaunchConfiguration("gz_verbosity")]
+        }.items(),
     )
 
     # Gazebo publishes its clock on gz-transport, not DDS. Without this
@@ -182,6 +184,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument("auto", default_value="true"),
         DeclareLaunchArgument("rviz", default_value="true"),
+        DeclareLaunchArgument("gz_verbosity", default_value="1"),
 
         gz_resources,
         gz_sim,

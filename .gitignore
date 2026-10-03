@@ -1,4 +1,32 @@
+# ROS 2 Colcon build artifacts
 ws/build/
 ws/install/
 ws/log/
+
+# Environment and secrets
 .env
+.env.*
+
+# Python bytecode and caches
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# OS and Desktop Environment metadata
+.directory
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor and IDE configurations
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Session transcripts & temporary logs
+ws/src/jim_sim/capstone_context.txt
+*.log
