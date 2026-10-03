@@ -42,7 +42,6 @@
   - [Field Generation](#field-generation)
   - [Oracle Weed Detector](#oracle-weed-detector)
   - [Analytical TF Targeting](#analytical-tf-targeting)
-- [Repository Audit: What is Needed for GitHub](#-repository-audit-what-is-needed-for-github)
 - [Hardware Implementation Roadmap](#-hardware-implementation-roadmap)
 - [License & Acknowledgments](#-license--acknowledgments)
 
@@ -321,25 +320,6 @@ ros2 param set /targeting_node auto_cycle false
 # Trigger targeting for next weed
 ros2 service call /targeting_node/treat_next std_srvs/srv/Trigger
 ```
-
----
-
-## 📋 Repository Audit: What is Needed for GitHub
-
-To transition this repository into a professional, production-ready, open-source standard, the following additions and refinements are recommended:
-
-| Category | Item | Status | Action Required |
-| :--- | :--- | :--- | :--- |
-| **Hygiene** | `.gitignore` rules | ✅ **Implemented** | Python cache (`__pycache__`), build logs, and OS files (`.directory`) filtered. |
-| **Legal** | `LICENSE` file | ✅ **Implemented** | Added standard open-source MIT License matching `package.xml`. |
-| **Documentation**| Root `README.md` | ✅ **Implemented** | Visual documentation, CAD specs, architecture, and diagrams. |
-| **CAD Docs** | `Main_Model/README.md` | ✅ **Implemented** | Part manifest, 3D printing guide, and FEA results. |
-| **Media Assets** | URL-safe asset directory | ✅ **Implemented** | Clean copies of CAD renders and FEA study in `assets/`. |
-| **CI/CD** | GitHub Actions Workflow | 🟡 **Recommended** | Create `.github/workflows/ros_ci.yml` to run `colcon test` and linter checks on PRs. |
-| **Testing** | Quantitative Validation Harness | 🟡 **High Priority** | Headless benchmarking script that spawns \(N\) weeds, logs commanded vs actual positions, and outputs error histograms. |
-| **Hardware** | Firmware Interface (`firmware/`) | 🟡 **Next Step** | Arduino / Teensy microcontroller sketch for TMC2209 STEP/DIR control and serial protocol. |
-| **Safety** | Supervisor State Machine | 🟡 **Roadmap** | Action server with heartbeat watchdog, E-stop service, and thermal monitor. |
-| **Perception** | Real YOLOv8/v11 Node | 🟡 **Future Scope** | Drop-in replacement node publishing identical `vision_msgs/Detection3DArray` from a real camera. |
 
 ---
 
